@@ -10,19 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <!-- === Контейнер для страницы входа === -->
     <div id="login-container" class="container">
         <div class="login-box">
-            <h2>Вход в систему</h2>
+            <div class="login-header">
+                <div class="login-logo">🎓</div>
+                <h2>Вход в систему</h2>
+                <p class="login-subtitle">Корпоративная платформа обучения</p>
+            </div>
             <form id="login-form">
                 <div class="input-group">
                     <label for="email">Электронная почта</label>
-                    <input type="email" id="email" required>
+                    <input type="email" id="email" placeholder="example@company.com" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Пароль</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" placeholder="••••••••" required>
                 </div>
                 <button type="submit" class="btn">Войти</button>
                 <p id="login-error" class="error-message"></p>
@@ -30,48 +33,252 @@
         </div>
     </div>
 
-    <!-- === Основной контейнер приложения (виден после входа) === -->
+    <!-- === Основной контейнер приложения === -->
     <div id="app-container" class="container" style="display: none;">
         <header class="app-header">
-            <div class="logo">Платформа</div>
-            <div class="user-profile">
-                <span id="user-info"></span>
-                <button id="logout-button" class="btn btn-secondary">Выход</button>
+            <div class="logo">🎓 Платформа</div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" title="Переключить тему">🌙</button>
+                <button id="notifications-btn" class="icon-btn" title="Уведомления">
+                    🔔
+                    <span class="notification-badge" id="notif-badge">3</span>
+                </button>
+                <div class="user-profile">
+                    <div class="user-avatar" id="user-avatar">👤</div>
+                    <div class="user-info-dropdown">
+                        <span id="user-info"></span>
+                        <button id="logout-button" class="btn btn-secondary">Выход</button>
+                    </div>
+                </div>
             </div>
         </header>
+
+        <!-- Notifications Panel -->
+        <div id="notifications-panel" class="notifications-panel" style="display: none;">
+            <div class="notif-header">
+                <h3>Уведомления</h3>
+                <button class="close-notif">✕</button>
+            </div>
+            <div class="notif-list">
+                <div class="notif-item unread">
+                    <span class="notif-icon">📚</span>
+                    <div class="notif-content">
+                        <p>Новый курс "JavaScript Advanced" назначен</p>
+                        <span class="notif-time">2 часа назад</span>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <span class="notif-icon">✅</span>
+                    <div class="notif-content">
+                        <p>Ваше задание проверено</p>
+                        <span class="notif-time">1 день назад</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <main class="app-main">
-            <!-- Сюда JavaScript будет вставлять нужную панель -->
             <div id="content-area"></div>
         </main>
     </div>
 
-    <!-- === Шаблоны для панелей управления (скрыты) === -->
+    <!-- === ШАБЛОНЫ === -->
+    
+    <!-- Админ панель -->
     <template id="admin-panel-template">
         <div class="dashboard">
-            <h1>👑 Панель Администратора</h1>
+            <div class="dashboard-header">
+                <h1>👑 Панель Администратора</h1>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Пользователей</div>
+                            <div class="stat-value" id="stat-users">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Курсов</div>
+                            <div class="stat-value" id="stat-courses">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Прогресс</div>
+                            <div class="stat-value" id="stat-progress">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="tabs">
                 <button class="tab-button active" data-tab="users">Пользователи</button>
                 <button class="tab-button" data-tab="courses">Курсы</button>
+                <button class="tab-button" data-tab="analytics">Аналитика</button>
+                <button class="tab-button" data-tab="settings">Настройки</button>
             </div>
             <div id="admin-content"></div>
         </div>
     </template>
 
+    <!-- Наставник панель -->
     <template id="mentor-panel-template">
         <div class="dashboard">
-            <h1>🧑‍🏫 Панель Наставника</h1>
-            <p>Здесь вы сможете создавать и редактировать учебные материалы.</p>
+            <div class="dashboard-header">
+                <h1>🧑‍🏫 Панель Наставника</h1>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Мои курсы</div>
+                            <div class="stat-value">3</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Студентов</div>
+                            <div class="stat-value">12</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-label">На проверке</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="my-courses">Мои курсы</button>
+                <button class="tab-button" data-tab="students">Студенты</button>
+                <button class="tab-button" data-tab="check-tasks">Проверка заданий</button>
+            </div>
+            <div id="mentor-content">
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-icon">💻</div>
+                            <span class="course-badge">Активен</span>
+                        </div>
+                        <h3>JavaScript Basics</h3>
+                        <p class="course-desc">Основы программирования на JavaScript</p>
+                        <div class="course-stats">
+                            <span>👥 8 студентов</span>
+                            <span>📚 12 уроков</span>
+                        </div>
+                        <button class="btn btn-small">Управлять</button>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-icon">🎨</div>
+                            <span class="course-badge">Активен</span>
+                        </div>
+                        <h3>UI/UX Design</h3>
+                        <p class="course-desc">Основы дизайна интерфейсов</p>
+                        <div class="course-stats">
+                            <span>👥 4 студента</span>
+                            <span>📚 8 уроков</span>
+                        </div>
+                        <button class="btn btn-small">Управлять</button>
+                    </div>
+                    <div class="course-card add-course-card">
+                        <div class="add-course-icon">➕</div>
+                        <h3>Создать новый курс</h3>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
 
+    <!-- Стажёр панель -->
     <template id="intern-panel-template">
-         <div class="dashboard">
-            <h1>🧑‍💻 Личный кабинет Стажёра</h1>
-            <p>Здесь будут отображаться ваши курсы и прогресс.</p>
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h1>🧑‍💻 Моё обучение</h1>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Курсов</div>
+                            <div class="stat-value">4</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Завершено</div>
+                            <div class="stat-value">2</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Достижений</div>
+                            <div class="stat-value">7</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="courses">Мои курсы</button>
+                <button class="tab-button" data-tab="achievements">Достижения</button>
+                <button class="tab-button" data-tab="history">История</button>
+            </div>
+            
+            <div id="intern-content">
+                <div class="courses-grid">
+                    <div class="course-card intern-course">
+                        <div class="course-header">
+                            <div class="course-icon">💻</div>
+                            <span class="course-badge in-progress">В процессе</span>
+                        </div>
+                        <h3>JavaScript Basics</h3>
+                        <p class="course-desc">Основы программирования на JavaScript</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%"></div>
+                        </div>
+                        <div class="progress-text">65% завершено</div>
+                        <button class="btn btn-small">Продолжить</button>
+                    </div>
+                    <div class="course-card intern-course">
+                        <div class="course-header">
+                            <div class="course-icon">🎨</div>
+                            <span class="course-badge completed">Завершён</span>
+                        </div>
+                        <h3>HTML & CSS</h3>
+                        <p class="course-desc">Основы веб-разработки</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill completed" style="width: 100%"></div>
+                        </div>
+                        <div class="progress-text">100% завершено</div>
+                        <div class="course-grade">Оценка: ⭐ 95/100</div>
+                    </div>
+                    <div class="course-card intern-course">
+                        <div class="course-header">
+                            <div class="course-icon">🔧</div>
+                            <span class="course-badge">Назначен</span>
+                        </div>
+                        <h3>Git & GitHub</h3>
+                        <p class="course-desc">Система контроля версий</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">Не начат</div>
+                        <button class="btn btn-small">Начать</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
 
-    <!-- === Firebase SDK (не трогаем) === -->
+    <!-- Firebase SDK -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -85,6 +292,5 @@
       };
     </script>
     <script type="module" src="script.js"></script>
-
 </body>
 </html>
