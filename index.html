@@ -5,26 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Платформа Обучения</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Добро пожаловать на обучающую платформу!</h1>
-    <p>Здесь будет форма входа.</p>
-    
-    <!-- Firebase SDK (Software Development Kit) -->
+
+    <!-- === Контейнер для страницы входа === -->
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <h2>Вход в систему</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Электронная почта</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Войти</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- === Основной контейнер приложения (виден после входа) === -->
+    <div id="app-container" class="container" style="display: none;">
+        <header class="app-header">
+            <div class="logo">Платформа</div>
+            <div class="user-profile">
+                <span id="user-info"></span>
+                <button id="logout-button" class="btn btn-secondary">Выход</button>
+            </div>
+        </header>
+        <main class="app-main">
+            <!-- Сюда JavaScript будет вставлять нужную панель -->
+            <div id="content-area"></div>
+        </main>
+    </div>
+
+    <!-- === Шаблоны для панелей управления (скрыты) === -->
+    <template id="admin-panel-template">
+        <div class="dashboard">
+            <h1>👑 Панель Администратора</h1>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="users">Пользователи</button>
+                <button class="tab-button" data-tab="courses">Курсы</button>
+            </div>
+            <div id="admin-content"></div>
+        </div>
+    </template>
+
+    <template id="mentor-panel-template">
+        <div class="dashboard">
+            <h1>🧑‍🏫 Панель Наставника</h1>
+            <p>Здесь вы сможете создавать и редактировать учебные материалы.</p>
+        </div>
+    </template>
+
+    <template id="intern-panel-template">
+         <div class="dashboard">
+            <h1>🧑‍💻 Личный кабинет Стажёра</h1>
+            <p>Здесь будут отображаться ваши курсы и прогресс.</p>
+        </div>
+    </template>
+
+    <!-- === Firebase SDK (не трогаем) === -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-      import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+      import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+      import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
       import { getStorage } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
       
       window.firebase = {
-        initializeApp,
-        getAuth,
-        getFirestore,
-        getStorage
+        initializeApp, getAuth, getFirestore, getStorage,
+        onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword,
+        doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc, updateDoc
       };
     </script>
-
     <script type="module" src="script.js"></script>
+
 </body>
 </html>
