@@ -1,0 +1,54 @@
+:root {
+    --primary-color: #3b82f6; --primary-hover: #2563eb;
+    --background-color: #f9fafb; --card-background: #ffffff;
+    --text-color: #1f2937; --text-light: #6b7280;
+    --border-color: #e5e7eb; --error-color: #ef4444; --success-color: #10b981;
+}
+body {
+    margin: 0; font-family: 'Inter', sans-serif; background-color: var(--background-color); color: var(--text-color);
+    display: flex; justify-content: center; align-items: center; min-height: 100vh;
+}
+.container { width: 100%; height: 100vh; }
+
+/* --- Стили для Входа --- */
+#login-container { display: flex; justify-content: center; align-items: center; }
+.login-box { width: 100%; max-width: 400px; padding: 40px; background-color: var(--card-background); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid var(--border-color); }
+.login-box h2 { margin-top: 0; font-size: 24px; text-align: center; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+.input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+.btn { width: 100%; padding: 12px; border: none; border-radius: 6px; background-color: var(--primary-color); color: white; font-size: 16px; font-weight: 700; cursor: pointer; transition: background-color 0.2s; }
+.btn:hover { background-color: var(--primary-hover); }
+.error-message { color: var(--error-color); text-align: center; margin-top: 16px; height: 20px; }
+
+/* --- Стили для Основного Приложения --- */
+#app-container { display: flex; flex-direction: column; }
+.app-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background-color: var(--card-background); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.logo { font-size: 24px; font-weight: 700; }
+.user-profile { display: flex; align-items: center; gap: 16px; }
+#user-info { font-weight: 500; }
+.btn-secondary { background-color: var(--border-color); color: var(--text-color); }
+.btn-secondary:hover { background-color: #d1d5db; }
+.app-main { flex-grow: 1; padding: 32px; overflow-y: auto; }
+
+/* --- Стили для Панелей --- */
+.dashboard h1 { margin-top: 0; }
+.tabs { display: flex; gap: 10px; border-bottom: 2px solid var(--border-color); margin-bottom: 24px; }
+.tab-button { padding: 10px 20px; border: none; background-color: transparent; cursor: pointer; font-size: 16px; font-weight: 500; color: var(--text-light); border-bottom: 2px solid transparent; }
+.tab-button.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+/* --- Стили для Таблиц (Админ) --- */
+.controls { margin-bottom: 20px; }
+.btn-add { width: auto; background-color: var(--success-color); padding: 10px 20px; }
+.content-table { width: 100%; border-collapse: collapse; }
+.content-table th, .content-table td { padding: 12px 15px; border: 1px solid var(--border-color); text-align: left; }
+.content-table th { background-color: #f3f4f6; }
+.btn-small { padding: 5px 10px; font-size: 14px; width: auto; margin-right: 5px; }
+.btn-danger { background-color: var(--error-color); }
+
+/* --- Стили для Модального окна --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+.modal-content { background-color: #fff; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; }
+.modal-header h2 { margin: 0; }
+.close-button { font-size: 28px; font-weight: bold; cursor: pointer; }
